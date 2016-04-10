@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A2345AF1CB9E2B200EC3349 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A2345AE1CB9E2B200EC3349 /* Default-568h@2x.png */; };
+		6A2345B31CBA026B00EC3349 /* CreateTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2345B21CBA026B00EC3349 /* CreateTabViewController.swift */; };
 		6A23621F1CB9A3EE00D898F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A23621E1CB9A3EE00D898F3 /* AppDelegate.swift */; };
 		6A2362211CB9A3EE00D898F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2362201CB9A3EE00D898F3 /* ViewController.swift */; };
 		6A2362241CB9A3EE00D898F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A2362221CB9A3EE00D898F3 /* Main.storyboard */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A2345AE1CB9E2B200EC3349 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		6A2345B21CBA026B00EC3349 /* CreateTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTabViewController.swift; sourceTree = "<group>"; };
 		6A23621B1CB9A3EE00D898F3 /* BarTab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarTab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A23621E1CB9A3EE00D898F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A2362201CB9A3EE00D898F3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +81,7 @@
 		6A2362121CB9A3EE00D898F3 = {
 			isa = PBXGroup;
 			children = (
+				6A2345AE1CB9E2B200EC3349 /* Default-568h@2x.png */,
 				6A23621D1CB9A3EE00D898F3 /* BarTab */,
 				6A2362321CB9A3EF00D898F3 /* BarTabTests */,
 				6A23623D1CB9A3EF00D898F3 /* BarTabUITests */,
@@ -98,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				6A23621E1CB9A3EE00D898F3 /* AppDelegate.swift */,
+				6A2345B21CBA026B00EC3349 /* CreateTabViewController.swift */,
 				6A2362201CB9A3EE00D898F3 /* ViewController.swift */,
 				6A2362221CB9A3EE00D898F3 /* Main.storyboard */,
 				6A2362251CB9A3EE00D898F3 /* Assets.xcassets */,
@@ -233,6 +239,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A2362291CB9A3EE00D898F3 /* LaunchScreen.storyboard in Resources */,
+				6A2345AF1CB9E2B200EC3349 /* Default-568h@2x.png in Resources */,
 				6A2362261CB9A3EE00D898F3 /* Assets.xcassets in Resources */,
 				6A2362241CB9A3EE00D898F3 /* Main.storyboard in Resources */,
 			);
@@ -259,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A2345B31CBA026B00EC3349 /* CreateTabViewController.swift in Sources */,
 				6A2362211CB9A3EE00D898F3 /* ViewController.swift in Sources */,
 				6A23621F1CB9A3EE00D898F3 /* AppDelegate.swift in Sources */,
 			);
@@ -402,10 +410,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = BarTab/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PranavJain.BarTab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -413,10 +424,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = BarTab/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PranavJain.BarTab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -485,6 +499,7 @@
 				6A2362451CB9A3EF00D898F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6A2362461CB9A3EF00D898F3 /* Build configuration list for PBXNativeTarget "BarTabTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +508,7 @@
 				6A2362481CB9A3EF00D898F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6A2362491CB9A3EF00D898F3 /* Build configuration list for PBXNativeTarget "BarTabUITests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +517,7 @@
 				6A23624B1CB9A3EF00D898F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

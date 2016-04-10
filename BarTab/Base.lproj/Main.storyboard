@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TabView" id="BYZ-38-t0r" customClass="ViewController" customModule="BarTab" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,132 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jfa-Fe-TSR">
+                                <rect key="frame" x="40" y="546" width="520" height="44"/>
+                                <color key="backgroundColor" red="0.32316958161802861" green="0.79607738874345546" blue="0.058373462117830954" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="1kX-Zn-8wz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
+                                <state key="normal" title="Pay &amp; Close Tab">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeBarTab:" destination="BYZ-38-t0r" eventType="touchUpInside" id="geF-dW-Gp8"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Bar Tab:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKI-lD-XC7">
+                                <rect key="frame" x="0.0" y="50" width="600" height="74"/>
+                                <color key="backgroundColor" red="0.35289794889999998" green="0.56686444030000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="74" id="cAx-OL-s9u"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="40"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="veP-hV-ayk">
+                                <rect key="frame" x="0.0" y="308" width="600" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="JUx-K3-2mc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <state key="normal" title="Refresh">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="refresh:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5R0-Vv-ugW"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="$0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mdA-ke-eU4">
+                                <rect key="frame" x="0.0" y="201" width="600" height="87"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="87" id="wKf-Z3-zIm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="100"/>
+                                <color key="textColor" red="0.32043410779999998" green="0.48541507249999999" blue="0.99998188020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xKI-lD-XC7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="3uf-XH-xCU"/>
+                            <constraint firstItem="mdA-ke-eU4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="4Dj-H2-1pb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mdA-ke-eU4" secondAttribute="trailing" constant="-20" id="4c1-N6-LKz"/>
+                            <constraint firstItem="Jfa-Fe-TSR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="7qk-fh-Rbo"/>
+                            <constraint firstItem="xKI-lD-XC7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="9FM-62-cP6"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jfa-Fe-TSR" secondAttribute="bottom" constant="10" id="HrY-Lh-bJG"/>
+                            <constraint firstItem="veP-hV-ayk" firstAttribute="top" secondItem="mdA-ke-eU4" secondAttribute="bottom" constant="19" id="PzM-Bb-JlN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Jfa-Fe-TSR" secondAttribute="trailing" constant="20" id="TOz-iH-Ieh"/>
+                            <constraint firstItem="veP-hV-ayk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="hth-gB-FiH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xKI-lD-XC7" secondAttribute="trailing" constant="-20" id="lp6-XX-b2L"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="veP-hV-ayk" secondAttribute="trailing" constant="-20" id="svq-wh-Hta"/>
+                            <constraint firstItem="mdA-ke-eU4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="202" id="xZy-uu-R2s"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="barLabel" destination="mdA-ke-eU4" id="c4l-Ek-LWd"/>
+                        <outlet property="payTabButton" destination="Jfa-Fe-TSR" id="Dhh-tv-oIO"/>
+                        <outlet property="refreshButton" destination="veP-hV-ayk" id="yHg-wk-Htw"/>
+                        <outlet property="titleBar" destination="xKI-lD-XC7" id="aA8-hS-KfH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="305" y="387"/>
+        </scene>
+        <!--Create Tab View Controller-->
+        <scene sceneID="jFV-ws-oGq">
+            <objects>
+                <viewController storyboardIdentifier="CreateTab" id="a62-ed-9BI" customClass="CreateTabViewController" customModule="BarTab" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nke-I8-khW"/>
+                        <viewControllerLayoutGuide type="bottom" id="PZ5-2t-8qN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wHP-si-Azb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="imr-4Y-cCx">
+                                <rect key="frame" x="40" y="316" width="520" height="44"/>
+                                <color key="backgroundColor" red="0.32316958159999998" green="0.7960773887" blue="0.058373462119999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="1Fr-C6-6wi"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
+                                <state key="normal" title="Open Tab">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeBarTab:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aXr-J5-VVu"/>
+                                    <action selector="createTab:" destination="a62-ed-9BI" eventType="touchUpInside" id="XVs-Gl-D0i"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Bar Tab" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2V9-fE-9DI">
+                                <rect key="frame" x="40" y="73" width="520" height="88.5"/>
+                                <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="70"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="imr-4Y-cCx" secondAttribute="trailing" constant="20" id="2EL-O3-R4H"/>
+                            <constraint firstItem="2V9-fE-9DI" firstAttribute="top" secondItem="nke-I8-khW" secondAttribute="bottom" constant="53" id="4fv-AT-TXk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2V9-fE-9DI" secondAttribute="trailing" constant="20" id="Gua-eb-iEc"/>
+                            <constraint firstItem="2V9-fE-9DI" firstAttribute="leading" secondItem="wHP-si-Azb" secondAttribute="leadingMargin" constant="20" id="Zjk-My-QgC"/>
+                            <constraint firstItem="PZ5-2t-8qN" firstAttribute="top" secondItem="imr-4Y-cCx" secondAttribute="bottom" constant="240" id="nDt-ef-P6J"/>
+                            <constraint firstItem="imr-4Y-cCx" firstAttribute="leading" secondItem="wHP-si-Azb" secondAttribute="leadingMargin" constant="20" id="rQP-7V-z7H"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="createTabButton" destination="imr-4Y-cCx" id="bFm-Tm-MNf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uCZ-JP-E9Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="305" y="1124"/>
         </scene>
     </scenes>
 </document>
