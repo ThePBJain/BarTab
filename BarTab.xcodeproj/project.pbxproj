@@ -16,6 +16,7 @@
 		6A2362291CB9A3EE00D898F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A2362271CB9A3EE00D898F3 /* LaunchScreen.storyboard */; };
 		6A2362341CB9A3EF00D898F3 /* BarTabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2362331CB9A3EF00D898F3 /* BarTabTests.swift */; };
 		6A23623F1CB9A3EF00D898F3 /* BarTabUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A23623E1CB9A3EF00D898F3 /* BarTabUITests.swift */; };
+		6AF8761F1EE6990D00642B8E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF8761E1EE6990D00642B8E /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		6A23623A1CB9A3EF00D898F3 /* BarTabUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BarTabUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A23623E1CB9A3EF00D898F3 /* BarTabUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarTabUITests.swift; sourceTree = "<group>"; };
 		6A2362401CB9A3EF00D898F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6AF8761E1EE6990D00642B8E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				6A23621E1CB9A3EE00D898F3 /* AppDelegate.swift */,
 				6A2345B21CBA026B00EC3349 /* CreateTabViewController.swift */,
 				6A2362201CB9A3EE00D898F3 /* ViewController.swift */,
+				6AF8761E1EE6990D00642B8E /* LoginViewController.swift */,
 				6A2362221CB9A3EE00D898F3 /* Main.storyboard */,
 				6A2362251CB9A3EE00D898F3 /* Assets.xcassets */,
 				6A2362271CB9A3EE00D898F3 /* LaunchScreen.storyboard */,
@@ -194,21 +197,24 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Pranav Jain";
 				TargetAttributes = {
 					6A23621A1CB9A3EE00D898F3 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = WJDVJGMV64;
+						LastSwiftMigration = 0800;
 					};
 					6A23622E1CB9A3EF00D898F3 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = WJDVJGMV64;
+						LastSwiftMigration = 0800;
 						TestTargetID = 6A23621A1CB9A3EE00D898F3;
 					};
 					6A2362391CB9A3EF00D898F3 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = WJDVJGMV64;
+						LastSwiftMigration = 0800;
 						TestTargetID = 6A23621A1CB9A3EE00D898F3;
 					};
 				};
@@ -266,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AF8761F1EE6990D00642B8E /* LoginViewController.swift in Sources */,
 				6A2345B31CBA026B00EC3349 /* CreateTabViewController.swift in Sources */,
 				6A2362211CB9A3EE00D898F3 /* ViewController.swift in Sources */,
 				6A23621F1CB9A3EE00D898F3 /* AppDelegate.swift in Sources */,
@@ -337,8 +344,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -382,8 +391,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -402,6 +413,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -417,6 +429,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = PranavJain.BarTab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -431,6 +444,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = PranavJain.BarTab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -442,6 +456,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PranavJain.BarTabTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BarTab.app/BarTab";
 			};
 			name = Debug;
@@ -454,6 +469,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PranavJain.BarTabTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BarTab.app/BarTab";
 			};
 			name = Release;
@@ -465,6 +481,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PranavJain.BarTabUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = BarTab;
 			};
 			name = Debug;
@@ -476,6 +493,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PranavJain.BarTabUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = BarTab;
 			};
 			name = Release;
