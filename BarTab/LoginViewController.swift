@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import OAuth2
 class LoginViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var signUpConstraint: NSLayoutConstraint!
@@ -32,28 +31,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         signInButton.layer.borderWidth = 1
-        signInButton.layer.borderColor = UIColor.darkGrayColor().CGColor
+        signInButton.layer.borderColor = UIColor.darkGray.cgColor
         signUpConstraint.constant = view.bounds.height*0.25
         //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "CoverPage")!)
         // Do any additional setup after loading the view.
         username.attributedPlaceholder = NSAttributedString(string:"Username",
-                                                            attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+                                                            attributes:[NSForegroundColorAttributeName: UIColor.white])
         password.attributedPlaceholder = NSAttributedString(string:"Password",
-                                                            attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+                                                            attributes:[NSForegroundColorAttributeName: UIColor.white])
         username.delegate = self
         password.delegate = self
         self.view.layoutIfNeeded()
     }
-    func genericOAuth2Password(username: String, password: String) -> OAuth2PasswordGrant {
-        return OAuth2PasswordGrant(settings: [
-            "client_id": "\(username)", //"schutzengel",
-            "client_secret": "\(password)",
-            "authorize_uri": "https://token.htt-cloud.catalysts.cc/oauth/check_token",
-            "token_uri": "https://auth.htt-cloud.catalysts.cc/auth/token",
-            "username":"\(username)",
-            "password":"\(password)",
-            "keychain": false,
-            ])
+    func authorize(username: String, password: String) {
+        print("ehlo")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -65,8 +56,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             
             self.view.layoutIfNeeded()
             //move sign up button down
-            UIView.animateWithDuration(0.5, delay: 0.0,
-                                   options: [.CurveEaseOut], animations: {
+            UIView.animate(withDuration: 0.5, delay: 0.0,
+                                   options: [.curveEaseOut], animations: {
                                     //animate signIn and signUp
                                     self.signUpConstraint.constant -= self.view.bounds.width/6
                                     self.signInButton.center.y += self.view.bounds.width/6
@@ -78,28 +69,30 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
                                     self.signUpButton.alpha = 0.0
                 }, completion: { finished in
                     if(finished){
-                        self.signUpButton.hidden = true
-                        self.conductorLabel.hidden = true
+                        self.signUpButton.isHidden = true
+                        self.conductorLabel.isHidden = true
                     }
             })
             //draw username path
             let passwordPath = UIBezierPath()
-            passwordPath.moveToPoint(CGPointMake((self.view.bounds.width/2.0 - 135.0), (2.0*self.view.bounds.height/3.0 + 5)))
-            passwordPath.addLineToPoint(CGPointMake((self.view.bounds.width/2.0 + 125.0), (2.0*self.view.bounds.height/3.0 + 5)))
+            passwordPath.move(to: CGPoint(x: (self.view.bounds.width/2.0 - 135.0),
+                                          y:(2.0*self.view.bounds.height/3.0 + 5)))
+            passwordPath.addLine(to: CGPoint(x: (self.view.bounds.width/2.0 + 125.0),
+                                             y: (2.0*self.view.bounds.height/3.0 + 5)))
             
             //draw password path.
             let usernamePath = UIBezierPath()
             //usernamePath.moveToPoint(CGPointMake((self.view.bounds.width/2.0 - 200.0), 2.0*self.view.bounds.height/3.0))
             //usernamePath.addLineToPoint(CGPointMake((self.view.bounds.width/2.0 + 200), 2.0*self.view.bounds.height/3.0))
-            usernamePath.moveToPoint(CGPointMake((self.view.bounds.width/2.0 - 135.0),
-                                                    (2.0*self.view.bounds.height/3.0 - 60)))
-            usernamePath.addLineToPoint(CGPointMake((self.view.bounds.width/2.0 + 125.0),
-                                                        (2.0*self.view.bounds.height/3.0 - 60)))
+            usernamePath.move(to: CGPoint(x: (self.view.bounds.width/2.0 - 135.0),
+                                          y: (2.0*self.view.bounds.height/3.0 - 60)))
+            usernamePath.addLine(to: CGPoint(x: (self.view.bounds.width/2.0 + 125.0),
+                                             y: (2.0*self.view.bounds.height/3.0 - 60)))
             //Create a CAShape Layer for username path
             let pathLayerUser: CAShapeLayer = CAShapeLayer()
             pathLayerUser.frame = self.view.bounds
-            pathLayerUser.path = usernamePath.CGPath
-            pathLayerUser.strokeColor = UIColor.whiteColor().CGColor
+            pathLayerUser.path = usernamePath.cgPath
+            pathLayerUser.strokeColor = UIColor.white.cgColor
             pathLayerUser.fillColor = nil
             pathLayerUser.lineWidth = 0.7
             pathLayerUser.lineJoin = kCALineJoinBevel
@@ -107,8 +100,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             //Create a CAShape Layer for password path
             let pathLayerPass: CAShapeLayer = CAShapeLayer()
             pathLayerPass.frame = self.view.bounds
-            pathLayerPass.path = passwordPath.CGPath
-            pathLayerPass.strokeColor = UIColor.whiteColor().CGColor
+            pathLayerPass.path = passwordPath.cgPath
+            pathLayerPass.strokeColor = UIColor.white.cgColor
             pathLayerPass.fillColor = nil
             pathLayerPass.lineWidth = 0.7
             pathLayerPass.lineJoin = kCALineJoinBevel
@@ -120,25 +113,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             //This is basic animation, quite a few other methods exist to handle animation see the reference site answers
             let pathAnimation: CABasicAnimation = CABasicAnimation(keyPath: "strokeEnd")
             pathAnimation.duration = 0.3
-            pathAnimation.fromValue = NSNumber(float: 0.0)
-            pathAnimation.toValue = NSNumber(float: 1.0)
+            pathAnimation.fromValue = NSNumber(value: 0.0)
+            pathAnimation.toValue = NSNumber(value: 1.0)
             
             //Animation will happen right away  
-            pathLayerUser.addAnimation(pathAnimation, forKey: "strokeEnd")
+            pathLayerUser.add(pathAnimation, forKey: "strokeEnd")
             
             pathAnimation.duration = 0.4
-            pathLayerPass.addAnimation(pathAnimation, forKey: "strokeEnd")
+            pathLayerPass.add(pathAnimation, forKey: "strokeEnd")
             
             fieldsAreShown = true
         }else{
             let username = self.username.text
             let password = self.password.text
-            let oauth = genericOAuth2Password(username!, password: password!)
+            //let oauth = genericOAuth2Password(username!, password: password!)
             //let parts = username!.characters.split() { $0 == "&" }.map() { String($0) }
             //oauth.authorize(params: OAuth2StringDict(minimumCapacity: <#T##Int#>)
             //oauth.authConfig.secretInBody = true
-            oauth.authorize()
-            oauth.onAuthorize = { parameters in
+            //oauth.authorize()
+            /*oauth.onAuthorize = { parameters in
                 print("Did authorize with parameters: \(parameters)")
                 
                 //change the view
@@ -153,7 +146,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
                     alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
-            }
+            }*/
             
             /*
             let req = oauth.request(forURL: oauth.authURL)
@@ -174,7 +167,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         }
        
     }
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let nextTage=textField.tag+1;
         // Try to find next responder
         let nextResponder=textField.superview?.viewWithTag(nextTage) as UIResponder!
@@ -190,9 +183,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         }
         return false // We do not want UITextField to insert line-breaks.
     }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         view.endEditing(true)
-        super.touchesBegan(touches, withEvent: event)
+        super.touchesBegan(touches, with: event)
     }
 
     /*
