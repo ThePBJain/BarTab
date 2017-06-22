@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 var tabExists = false
 var success = false
@@ -30,6 +31,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var payTabButton: UIButton!
     @IBOutlet weak var titleBar: UILabel!
+    
+    //authentication and user data that is passed between views
+    var token : HTTPHeaders = ["Authorization": ""]
+    var userID : String = ""
 //    var barTab: String = "0.00" {
 //        didSet{
 //            updateLabel()
@@ -146,7 +151,9 @@ class ViewController: UIViewController {
         }
         tabExists = false
         success = true
-        let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateTab")
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateTab") as! CreateTabViewController
+        viewController.token = self.token;
+        viewController.userID = self.userID;
         self.present(viewController, animated: true, completion: nil)
 
     }

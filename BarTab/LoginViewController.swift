@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 class LoginViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var signUpConstraint: NSLayoutConstraint!
@@ -18,15 +19,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     
     @IBOutlet weak var conductorLabel: UILabel!
     
-    /*let settings = [
-        "client_id": "my_swift_app",
-        "client_secret": "C7447242-A0CF-47C5-BAC7-B38BA91970A9",
-        "authorize_uri": "https://auth.htt-cloud.catalysts.cc/auth/confirm",
-        "token_uri": "https://token.htt-cloud.catalysts.cc/",   // code grant only
-        "scope": "profile email",
-        "redirect_uris": ["myapp://oauth/callback"],   // register the "myapp" scheme in Info.plist
-        "keychain": false,     // if you DON'T want keychain integration
-        ] as OAuth2JSON*/
+    //authentication and user data that is passed between views
+    var token : HTTPHeaders = ["Authorization": ""]
+    var userID : String = ""
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +47,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func SignInAction(sender: AnyObject) {
+    @IBAction func SignInAction(sender: UIButton) {
         if(!fieldsAreShown){
             
             self.view.layoutIfNeeded()
@@ -135,7 +131,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
                 print("Did authorize with parameters: \(parameters)")
                 
                 //change the view
-                let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainView")
+                let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CreateTab")
                 //self.navigationController!.pushViewController(viewController, animated: true)
                 self.presentViewController(viewController, animated: true, completion: nil)
             }
@@ -163,6 +159,42 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             }
             task.resume()*/
             //preform login check
+            let parameters: [String: Any] = [
+            "email" : username!,
+            "password" : password!
+            ]
+            Alamofire.request("http://192.168.1.111:3000/auth/authenticate", method: .post, parameters: parameters)
+            .responseJSON { response in
+                print(response)
+                if let status = response.response?.statusCode {
+                    switch(status){
+                    case 201:
+                        print("example success")
+                    default:
+                        print("error with response status: \(status)")
+                    }
+                }
+                //to get JSON return value
+                if let result = response.result.value {
+                    let JSON = result as! NSDictionary
+                    print(JSON)
+                    //get values
+                    self.token["Authorization"] = JSON.object(forKey: "token") as! String;
+                    self.userID = ((JSON.object(forKey: "user") as? [String: String])?["_id"])!;
+                    print("UserID: \(self.userID) \nToken: \(self.token.description)");
+                    
+                    
+                    //change the view & pass the values
+                    let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateTab") as! CreateTabViewController
+                    viewController.token = self.token;
+                    viewController.userID = self.userID;
+                    
+                    //self.navigationController!.pushViewController(viewController, animated: true)
+                    self.present(viewController, animated: true, completion: nil)
+                    
+                    
+                }
+            }
             
         }
        

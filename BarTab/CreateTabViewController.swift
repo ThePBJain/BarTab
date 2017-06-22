@@ -9,11 +9,16 @@
 import UIKit
 import MapKit
 import CoreLocation
-
+import Alamofire
 class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
 
     @IBOutlet weak var createTabButton: UIButton!
     let locationManager = CLLocationManager()
+    
+    //authentication and user data that is passed between views
+    var token : HTTPHeaders = ["Authorization": ""]
+    var userID : String = ""
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Ask for Authorisation from the User.
@@ -97,7 +102,9 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
                                 let message = jsonResult["message"] as! String
                                 if(message.contains("exists")){
                                     tabExists = true
-                                    let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabView")
+                                    let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabView") as! ViewController
+                                    viewController.token = self.token;
+                                    viewController.userID = self.userID;
                                     self.present(viewController, animated: true, completion: nil)
                                 }
                             }
