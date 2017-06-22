@@ -18,6 +18,7 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
     //authentication and user data that is passed between views
     var token : HTTPHeaders = ["Authorization": ""]
     var userID : String = ""
+    var merchants : [String : String] = [:]
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -56,9 +57,22 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
     }
 
     @IBAction func createTab(_ sender: AnyObject) {
-        let url = URL(string: "http://ec2-54-213-202-21.us-west-2.compute.amazonaws.com:5000/newtab/\(customerID)")
-        
-        let task = URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
+        let (email, merchantID) = self.merchants.first!
+        let parameters: [String: Any] = [
+            "id" : merchantID
+        ]
+        Alamofire.request("http://192.168.1.111:3000/tabs/open", method: .post, parameters: parameters, headers: token)
+            .responseJSON{ response in
+                print(response)
+                //move to next view and pass data
+                tabExists = true
+                let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabView") as! ViewController
+                viewController.token = self.token;
+                viewController.userID = self.userID;
+                viewController.merchantID = merchantID;
+                self.present(viewController, animated: true, completion: nil)
+        }
+        /*let task = URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
             if error != nil {
                 print(error)
             } else {
@@ -81,7 +95,7 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
                 }
             }
         }) 
-        task.resume()
+        task.resume()*/
     }
     func checkTab(){
         let url : String = "http://ec2-54-213-202-21.us-west-2.compute.amazonaws.com:5000/checktab/\(customerID)"
@@ -126,46 +140,48 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
         print("locations = \(locValue.latitude) \(locValue.longitude)")
         let lat = "\(locValue.latitude)"
         let long = "\(locValue.longitude)"
-        print(nearbyMerchants(latitude: lat, longitude: long));
+        //call this every 10 seconds if possible...
+        nearbyMerchants(latitude: lat, longitude: long);
     }
-    func nearbyMerchants(latitude: String, longitude: String) -> String{
-        var baseURL = "http://192.168.1.111:3000/api/v1/merchants/nearby?long=\(longitude)&lat=\(latitude)";
+    func nearbyMerchants(latitude: String, longitude: String){
+        let baseURL = "http://192.168.1.111:3000/api/v1/merchants/nearby?long=\(longitude)&lat=\(latitude)";
         
-        let urlString = URL(string: baseURL)
-        if let url = urlString {
-            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-                if error != nil {
-                    print(error)
-                } else {
-                    if let usableData = data {
-                        print(usableData) //JSONSerialization
+        let parameters = ["long": longitude, "lat": latitude]
+        Alamofire.request("http://192.168.1.111:3000/api/v1/merchants/nearby", parameters: parameters, headers: token)
+            .responseJSON{ response in
+                //print(response)
+                if let status = response.response?.statusCode {
+                    switch(status){
+                    case 200:
+                        print("example success")
+                    default:
+                        print("error with response status: \(status)")
                     }
                 }
-            }
-            task.resume()
+                //to get JSON return value
+                if let result = response.result.value {
+                    let JSON = result as! NSDictionary
+                    print(JSON)
+                    if let nearMerchants = (JSON.object(forKey: "data") as? [NSDictionary]) {
+                        nearMerchants.forEach { merchant in
+                            if let merch = merchant["obj"] as? NSDictionary {
+                                
+                                //here you add new nearby merchants to list or remove ones no longer nearby
+                                let id = merch["_id"] as! String;
+                                let email = merch["email"] as! String;
+                                self.merchants[email] = id;
+                                print("Merchants Dict looks like this: \(self.merchants)")
+                                
+                                
+                            }
+                        }
+                        //over here call some function that creates a button for each item in self.merchants
+                    }
+                    
+                }
+                
         }
-        /*
-        var request = URLRequest(url: URL(string: "http://localhost:3000/api/v1/merchants/nearby")!)
-        request.httpMethod = "POST"
-        let postString = "id=13&name=Jack"
-        request.httpBody = postString.data(using: .utf8)
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {                                                 // check for fundamental networking error
-                print("error=\(error)")
-                return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response)")
-            }
-            
-            let responseString = String(data: data, encoding: .utf8)
-            print("responseString = \(responseString)")
-        }
-        task.resume()*/
         
-        return "HI"
     }
 
     override func didReceiveMemoryWarning() {

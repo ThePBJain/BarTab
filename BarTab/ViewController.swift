@@ -35,6 +35,7 @@ class ViewController: UIViewController {
     //authentication and user data that is passed between views
     var token : HTTPHeaders = ["Authorization": ""]
     var userID : String = ""
+    var merchantID: String = ""
 //    var barTab: String = "0.00" {
 //        didSet{
 //            updateLabel()
