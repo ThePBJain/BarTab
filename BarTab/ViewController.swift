@@ -76,7 +76,7 @@ class ViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(ViewController.updateBarTab), userInfo: nil, repeats: true)
         timer1 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(ViewController.updateLabel), userInfo: nil, repeats: true)
     }
-    @IBAction func refresh(_ sender: AnyObject) {
+    @IBAction func refresh(_ sender: UIButton) {
         print(BarTabResource.sharedInstance.getBarTab())
         barLabel.text = "$\(BarTabResource.sharedInstance.getBarTab())"
     }
@@ -87,123 +87,54 @@ class ViewController: UIViewController {
     }
     func updateBarTab(){
         if(tabExists){
-            let url : String = "http://localhost:3000/update/add/\(customerID)"
-            let request : NSMutableURLRequest = NSMutableURLRequest()
-            request.url = URL(string: url)
-            request.httpMethod = "GET"
-            let session = URLSession.shared
-            let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-                if error != nil {
-                    print(error)
-                } else {
-                    if let httpResponse = response as? HTTPURLResponse {
-                        if httpResponse.statusCode == 200 {
-                            do {
-                                if let data = data, let jsonResult = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                                    print(jsonResult)
-                                    //self.performSegueWithIdentifier("SuccessSignin", sender: self)
-                                    //self.barTab = jsonResult["total"] as! String
-                                    DispatchQueue.main.async {
-                                        BarTabResource.sharedInstance.setBarTab(jsonResult["total"] as! String)
-                                       
-                                    }
-                                }
-                            } catch let JSONError as NSError {
-                                print(JSONError)
-                            }
-                        } else if (httpResponse.statusCode == 422) {
-                            print("422 Error Occured...")
+            let url : String = "http://192.168.1.111:3000/tabs/tab/\(merchantID)"
+            
+            //let parameters = ["long": longitude, "lat": latitude]
+            Alamofire.request(url, headers: token)
+                .responseJSON{ response in
+                    //print(response)
+                    if let status = response.response?.statusCode {
+                        switch(status){
+                        case 200:
+                            print("example success")
+                        default:
+                            print("error with response status: \(status)")
                         }
-                    } else {
-                        print("Can't cast response to NSHTTPURLResponse")
                     }
-                }
-            }) 
-            task.resume()
+                    //to get JSON return value
+                    if let result = response.result.value {
+                        let JSON = result as! NSDictionary
+                        print(JSON)
+                        DispatchQueue.main.async {
+                            
+                            BarTabResource.sharedInstance.setBarTab(((JSON.object(forKey: "data") as? [String: String])?["tabTotal"])!)
+                            
+                        }
+                        
+                    }
+                    
+            }
+            
         }
     }
     
     
     @IBAction func closeBarTab(_ sender: AnyObject) {
         //let fBarTab = String(format: "%.2f", barTab)
-        
-        let jsonString:String = "{\"TransactionAmount\": \"\(BarTabResource.sharedInstance.getBarTab())\"}"
-        let params = convertStringToDictionary(jsonString)
-        let url = "http://ec2-54-213-202-21.us-west-2.compute.amazonaws.com:5001/payme/\(customerID)"
-        postData(url, params: params!) { (data, response, error) -> Void in
-            guard error == nil && data != nil else {                                                          // check for fundamental networking error
-                print("error=\(error)")
-                return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200 {           // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response)")
-            }
-            
-            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
-            let failString = "fail"
-            //if(!failString.containsString(responseString?.valueForKey("message") as! String)){
+        let parameters: [String: Any] = [
+            "id" : merchantID
+        ]
+        Alamofire.request("http://192.168.1.111:3000/tabs/close", method: .post, parameters: parameters, headers: token)
+            .responseJSON{ response in
+                print(response)
                 tabExists = false
                 success = true
-            //}
-            
+                let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateTab") as! CreateTabViewController
+                viewController.token = self.token;
+                viewController.userID = self.userID;
+                self.present(viewController, animated: true, completion: nil)
         }
-        tabExists = false
-        success = true
-        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateTab") as! CreateTabViewController
-        viewController.token = self.token;
-        viewController.userID = self.userID;
-        self.present(viewController, animated: true, completion: nil)
 
-    }
-    func convertStringToDictionary(_ text: String) -> [String:AnyObject]? {
-        if let data = text.data(using: String.Encoding.utf8) {
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:AnyObject]
-                return json
-            } catch {
-                print("Something went wrong")
-            }
-        }
-        return nil
-    }
-    //post data function
-    func postData(_ url: String, params: [String:AnyObject], completionHandler: @escaping (_ data: Data?, _ response: URLResponse?, _ error: NSError?) -> ()) {
-        
-        // Indicate download
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        let url = URL(string: url)!
-        //        print("URL: \(url)")
-        let request = NSMutableURLRequest(url: url)
-        let session = URLSession.shared
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        // Verify downloading data is allowed
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
-        } catch let error as NSError {
-            print("Error in request post: \(error)")
-            request.httpBody = nil
-        } catch {
-            print("Catch all error: \(error)")
-        }
-        
-        // Post the data
-        let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-            completionHandler(data, response, error as! NSError)
-            
-            // Stop download indication
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false // Stop download indication
-            
-        }) 
-        
-        task.resume()
-        
     }
 
 

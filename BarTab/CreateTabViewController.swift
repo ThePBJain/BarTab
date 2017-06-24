@@ -14,7 +14,7 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
 
     @IBOutlet weak var createTabButton: UIButton!
     let locationManager = CLLocationManager()
-    
+    var ran = false;
     //authentication and user data that is passed between views
     var token : HTTPHeaders = ["Authorization": ""]
     var userID : String = ""
@@ -56,7 +56,7 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
         
     }
 
-    @IBAction func createTab(_ sender: AnyObject) {
+    @IBAction func createTab(_ sender: UIButton) {
         let (email, merchantID) = self.merchants.first!
         let parameters: [String: Any] = [
             "id" : merchantID
@@ -64,7 +64,8 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
         Alamofire.request("http://192.168.1.111:3000/tabs/open", method: .post, parameters: parameters, headers: token)
             .responseJSON{ response in
                 print(response)
-                //move to next view and pass data
+                self.locationManager.stopUpdatingLocation()
+                //move to next view and pass data IF NO ERROR
                 tabExists = true
                 let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabView") as! ViewController
                 viewController.token = self.token;
@@ -98,6 +99,8 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
         task.resume()*/
     }
     func checkTab(){
+        
+        //somehow store the old merchantIDs to use to check tabs again...
         let url : String = "http://ec2-54-213-202-21.us-west-2.compute.amazonaws.com:5000/checktab/\(customerID)"
         let request : NSMutableURLRequest = NSMutableURLRequest()
         request.url = URL(string: url)
@@ -141,10 +144,13 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
         let lat = "\(locValue.latitude)"
         let long = "\(locValue.longitude)"
         //call this every 10 seconds if possible...
-        nearbyMerchants(latitude: lat, longitude: long);
+        if(!ran){
+            ran = true;
+            nearbyMerchants(latitude: lat, longitude: long);
+        }
     }
     func nearbyMerchants(latitude: String, longitude: String){
-        let baseURL = "http://192.168.1.111:3000/api/v1/merchants/nearby?long=\(longitude)&lat=\(latitude)";
+        //let baseURL = "http://192.168.1.111:3000/api/v1/merchants/nearby?long=\(longitude)&lat=\(latitude)";
         
         let parameters = ["long": longitude, "lat": latitude]
         Alamofire.request("http://192.168.1.111:3000/api/v1/merchants/nearby", parameters: parameters, headers: token)
@@ -176,6 +182,7 @@ class CreateTabViewController: UIViewController, CLLocationManagerDelegate{
                             }
                         }
                         //over here call some function that creates a button for each item in self.merchants
+                        //self.locationManager.stopUpdatingLocation()
                     }
                     
                 }
